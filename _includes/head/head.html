@@ -1,0 +1,26 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>{% if page.title %}{{ page.title | escape }} | {% endif %}{{ site.title | escape }}</title>
+<link rel="shortcut icon" type="image/x-icon" href="{{ '/favicon.ico' | absolute_url }}">
+<!-- built with timeline-recipe https://github.com/evanwill/timeline-recipe -->
+<meta name="generator" content="collectionbuilder" />
+<meta http-equiv="Content-Language" content="en-us" >
+
+{% comment %} During production build ONLY add meta tags and optional analytics.
+Production build is automatically triggered on gh-pages {% endcomment %}
+{%- if jekyll.environment == "production" -%}
+{% if site.noindex == true or page.noindex == true %}<meta name="robots" content="noindex">{% endif %}
+{% include head/page-meta.html %}
+{% if site.google-analytics-id %}{% include head/google-analytics.html %}{% endif %}
+{% endif %}
+
+<!-- load style sheets -->
+{% if site.data.theme.font-cdn %}{{ site.data.theme.font-cdn }}{% endif %}
+<link rel="stylesheet" href="{% if site.data.theme.bootswatch %}https://stackpath.bootstrapcdn.com/bootswatch/4.4.0/{{ site.data.theme.bootswatch }}/bootstrap.min.css{% else %}{{ '/assets/lib/bootstrap.min.css' | relative_url }}{% endif %}" type="text/css">
+<script defer src="{{ '/assets/lib/fontawesome-free/js/all.min.js' | relative_url }}"></script>
+{% if page.timeline %}<link rel="stylesheet" href="{{ '/assets/lib/timeline3/css/timeline.css' | relative_url }}">{% endif %}
+
+<!-- load custom css last to allow overrides -->
+<link rel="stylesheet" href="{{ '/assets/css/custom.css' | absolute_url }}" type="text/css">
+
+<!-- Last build date: {{ site.time | date: "%Y-%m-%d" }} -->

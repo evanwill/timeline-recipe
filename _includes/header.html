@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#siteNav" aria-controls="siteNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="siteNav">
+        <ul class="navbar-nav mr-auto">
+            {%- assign navItems = site.data.config-nav | where_exp: 'item', 'item.dropdown_parent == nil' -%} 
+            {% for nav in navItems %}
+            {% if nav.stub %}
+            <li class="nav-item {% if page.url == nav.stub %}active{% endif %}">
+                <a class="nav-link " href="{{ nav.stub | relative_url }}">{{ nav.display_name }}</a>
+            </li>
+            {%- else -%}
+            <li class="nav-item dropdown">
+                {% assign navChildren = site.data.config-nav | where_exp: 'item', 'item.dropdown_parent == nav.display_name' %}
+                {%- assign childStubs = navChildren | map: 'stub' -%}
+                <a id="{{ nav.display_name | slugify }}" class="nav-link  dropdown-toggle{% if childStubs contains page.url %} active{% endif %}" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ nav.display_name }}</a>
+                <div class="dropdown-menu" aria-labelledby="{{ nav.display_name | slugify }}">
+                    {% for c in navChildren %}
+                    <a class="dropdown-item {% if page.url == c.stub %}active{% endif %}" href="{{ c.stub | relative_url }}">{{ c.display_name }}</a>
+                    {% endfor %}
+                </div>
+            </li>
+            {% endif %}
+            {%- endfor -%}
+        </ul>
+    </div>
+</nav>
