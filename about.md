@@ -5,11 +5,13 @@ layout: page
 
 # About timeline-recipe
 
+*very drafty project*
+
 A Jekyll template to create standalone [TimelineJS](https://timeline.knightlab.com/) on GitHub Pages.
 
 To add a timeline to a page:
 
-First, add base info to the page yml front matter:
+Add base info to the page yml front matter:
 
 ```
 timeline: demo-test # matches CSV file in _data
