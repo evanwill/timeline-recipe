@@ -30,12 +30,6 @@ author: evanwill
 date: 2020
 
 ##########
-# COLLECTION SETTINGS
-#
-# choose metadata: this is the name of the csv file in your _data directory that describes the objects in your collection
-metadata: demo-metadata 
-
-##########
 # GOOGLE SERVICES [optional!]
 #
 # leave these blank or comment out to NOT include google code
