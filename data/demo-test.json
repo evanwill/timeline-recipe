@@ -1,0 +1,36 @@
+---
+# generate json data for TimelineJS 
+---
+{%- assign events = site.data.demo-test -%}
+{
+    "title": {
+        "media": {
+          "url": "{{ page.timeline-featured-image }}",
+          "caption": {{ featuredItem.title | jsonify }},
+          "credit": {{ page.timeline-featured-image-credit | jsonify }}
+        },
+        "text": {
+          "headline": {% if page.timeline-title %}{{ page.timeline-title | jsonify }}{% else %}{{ site.title | append: ' Timeline' | jsonify }}{% endif %},
+          "text": {% if page.timeline-description %}{{ page.timeline-description | jsonify }}{% else %}{{ site.title | append: ' Timeline' | jsonify }}{% endif %}
+        }
+    },
+    "events": [
+      {% for event in events %}{% if event.year %}{
+        "media": {
+          "url": "{% if event.media_type contains 'mp3' %}{{ '/assets/img/audio.svg' | relative_url }}{% elsif event.media_type contains 'pdf' %}{{ '/assets/img/pdf.svg' | relative_url }}{% elsif event.media_type contains 'youtube' %}{{ 'https://img.youtube.com/vi/' | append: event.media_filename | append: '/hqdefault.jpg' }}{% else %}{{ event.media_filename | prepend: '/objects/' | relative_url }}{% endif %}",
+          "link": "{% if event.media_type contains 'youtube' %}{{ 'https://youtu.be/' | append: event.media_filename }}{% else %}{{ event.media_filename | prepend: '/objects/' | relative_url }}{% endif %}",
+          "caption": {{ item.title | jsonify }},
+          "credit": "{{ event.media_credit }}"
+        },
+        "start_date": { 
+          {% if event.month %}"month": "{{ event.month }}",{% endif %}
+          {% if event.day %}"day": "{{ event.day }}",{% endif %}
+          "year": "{{ event.year }}"
+        },
+        "text": {
+          "headline": {{ event.title | jsonify }}{% if event.text %},
+          "text": {{ event.text | jsonify }}{% endif %}
+        }
+      }{% unless forloop.last %},{% endunless %}{% endif %}{% endfor %}
+    ]
+}
